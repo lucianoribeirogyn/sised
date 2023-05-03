@@ -4,3 +4,4 @@ seaborn==0.12.2
 mysql-connector-python==8.0.32
 numba==0.55.1
 statsmodels==0.13.2
+docutils==0.18.1
