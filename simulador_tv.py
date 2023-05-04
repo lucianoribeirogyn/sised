@@ -214,7 +214,8 @@ def linha_regressao_filtrada():
 # =========================================================== #
 def intervalo_anos_vazoes(reservatorio_id):    
     options_anos_vazoes = []
-    query_anos = "SELECT DISTINCT YEAR(FROM_UNIXTIME(hidroVaz_data)) AS ano FROM dctweb_d6.hidro_vazoes_ana AS USIT WHERE USIT.hidrovaz_hidroRes_id = {}"
+    #query_anos = "SELECT DISTINCT YEAR(FROM_UNIXTIME(hidroVaz_data)) AS ano FROM hidro_vazoes_ana AS USIT WHERE USIT.hidrovaz_hidroRes_id = {}"
+    query_anos = "SELECT DISTINCT YEAR(DATEADD('SECOND', hidroVaz_data, '1970-01-01'::timestamp)) AS ano FROM hidro_vazoes_ana WHERE hidrovaz_hidroRes_id = {};"
     n_anos = run_query(query_anos.format(reservatorio_id))
  #   for row in n_anos:
   #      options_anos_vazoes.append(str(row[0]))
@@ -227,11 +228,13 @@ def intervalo_anos_vazoes(reservatorio_id):
 # =========================================================== #
 def intervalo_meses_vazoes(reservatorio_id):    
     options_meses_vazoes = []
-    query_meses = "SELECT DISTINCT DATE_FORMAT(FROM_UNIXTIME(hidroVaz_data), '%b') AS mes FROM dctweb_d6.hidro_vazoes_ana AS USIT WHERE USIT.hidrovaz_hidroRes_id = {}"
+#    query_meses = "SELECT DISTINCT DATE_FORMAT(FROM_UNIXTIME(hidroVaz_data), '%b') AS mes FROM hidro_vazoes_ana AS USIT WHERE USIT.hidrovaz_hidroRes_id = {}"
+    query_meses = "SELECT DISTINCT TO_CHAR(TO_TIMESTAMP_NTZ(hidroVaz_data), 'Mon') AS mes FROM hidro_vazoes_ana WHERE hidrovaz_hidroRes_id = {}"
     n_meses = run_query(query_meses.format(reservatorio_id))
     for row in n_meses:
         options_meses_vazoes.append(str(row[0]))
     return options_meses_vazoes
+
 
 # =========================================================== #
 #  FUNÇÃO CALCULAR QST A PARTIR DA EQ CURVA CHAVE SEDIMENTOS  #
@@ -299,7 +302,7 @@ def atualiza_resumo():
     Vazao_eixo_y = data_amostras['Vazao']
     log_Qst_eixo_x = np.log10(Qst_eixo_x)
     log_Vazao_eixo_y = np.log10(Vazao_eixo_y)
-    
+
     # Fit a linear regression model using log-transformed variables
     model_completo = smf.ols("np.log(Qst) ~ np.log(Vazao)", data=bd_reservatorio_selecionado_completo).fit()
     model = smf.ols("np.log(Qst) ~ np.log(Vazao)", data=data_amostras).fit()
@@ -309,7 +312,7 @@ def atualiza_resumo():
     a_coeficiente_completo = model_completo.params['np.log(Vazao)']
     b_coeficiente = model.params['Intercept']
     a_coeficiente = model.params['np.log(Vazao)']
-    
+
     #reg_line = a_coeficiente * log_Qst_eixo_x + b_coeficiente
     formatted_a_coeficiente_completo = locale.currency(a_coeficiente_completo, grouping=True, symbol=False)
     formatted_b_coeficiente_completo = locale.currency(b_coeficiente_completo, grouping=True, symbol=False)
@@ -342,6 +345,8 @@ def atualiza_resumo():
     vazao_ano_media_dia = vazao_total_por_ano/365
     vazaomaa_ano = vazao_ano_media_dia.mean()[0];
     formatted_vazaomaa_ano = locale.currency(vazaomaa_ano, grouping=True, symbol=False)
+
+    
     
     ### BLOCO PARA MÊS
     grouped_mes_vazao_completo = data_vazoes_completo.groupby(['Month'])
@@ -393,7 +398,7 @@ def atualiza_resumo():
 #                 CONSULTA A TODAS AS AMOSTRAS                #
 #                       ONDE A VAZÂO > 0                      #
 # =========================================================== #
-rows = run_query("SELECT hidroEstAmo.*, hidroRes.hidroRes_nome, hidroEst.hidroEst_nome, dres_sedres.dres_sedres_metanal_evaporacao, dres_sedres.dres_sedres_metanal_tubo, dres_sedres.dres_sedres_metanal_pipetagem, hidroRes.hidroRes_reservatorio_volUtil, hidroRes.hidroRes_id, hidroRes.hidroRes_entrada_operData FROM hidro_estacoes_amostras AS hidroEstAmo INNER JOIN hidro_estacoes AS hidroEst ON hidroEstAmo.hidroEstAmo_hidroEst_num=hidroEst.hidroEst_num INNER JOIN hidro_reservatorios AS hidroRes ON hidroRes.hidroRes_id=hidroEst.hidroEst_hidroRes_id INNER JOIN dctweb_servicos_tab_resultados_sedimentologia_resumo AS dres_sedres ON dres_sedres.dres_sedres_hidroEstAmo_id=hidroEstAmo.hidroEstAmo_id WHERE hidroEstAmo.hidroEstAmo_vazao>0 and hidroEstAmo_dist_MD_ME>0")
+rows = run_query("SELECT hidroEstAmo.hidroEstAmo_id, hidroEstAmo.hidroEstAmo_num, hidroEstAmo.hidroEstAmo_hidroEst_num, hidroEstAmo.hidroEstAmo_Campanha, hidroEstAmo.hidroEstAmo_tpAmostrador, hidroEstAmo.hidroEstAmo_bico, hidroEstAmo.hidroEstAmo_metodo, hidroEstAmo.hidroEstAmo_vazao, hidroEstAmo.hidroEstAmo_temp, hidroEstAmo.hidroEstAmo_dist_MD_ME, hidroEstAmo.hidroEstAmo_status, hidroEstAmo.hidroEstAmo_fpes_id, hidroEstAmo.hidroEstAmo_fpes_id_visita,hidroEstAmo.hidroEstAmo_data, hidroEstAmo.hidroEstAmo_obs, hidroEstAmo.hidroEstAmo_vp_hidroEstAmoVert_id, hidroEstAmo.hidroEstAmo_vp_vm, hidroEstAmo.hidroEstAmo_dos_id, hidroEstAmo.hidroEstAmo_dam_id, hidroEstAmo.hidroEstAmo_ficha_coleta, hidroEstAmo.hidroEstAmo_ensaio_sed, hidroEstAmo.hidroEstAmo_drel_id, hidroEstAmo.hidroEstAmo_ntravessias, hidroEstAmo.hidroEstAmo_hora_ini, hidroEstAmo.hidroEstAmo_hora_fim, hidroEstAmo.hidroEstAmo_cota, hidroEstAmo.hidroEstAmo_area, hidroRes.hidroRes_nome, hidroEst.hidroEst_nome, dres_sedres.dres_sedres_metanal_evaporacao, dres_sedres.dres_sedres_metanal_tubo, dres_sedres.dres_sedres_metanal_pipetagem, hidroRes.hidroRes_reservatorio_volUtil, hidroRes.hidroRes_id, hidroRes.hidroRes_entrada_operData FROM hidro_estacoes_amostras AS hidroEstAmo INNER JOIN hidro_estacoes AS hidroEst ON hidroEstAmo.hidroEstAmo_hidroEst_num=hidroEst.hidroEst_num INNER JOIN hidro_reservatorios AS hidroRes ON hidroRes.hidroRes_id=hidroEst.hidroEst_hidroRes_id INNER JOIN dctweb_servicos_tab_resultados_sedimentologia_resumo AS dres_sedres ON dres_sedres.dres_sedres_hidroEstAmo_id=hidroEstAmo.hidroEstAmo_id WHERE hidroEstAmo.hidroEstAmo_vazao>0 and hidroEstAmo_dist_MD_ME>0")
 data_amostras = pd.DataFrame(columns=["Reservatorio_id", "Reservatorio", "Estacao", "hidroEstAmo_id", "Coleta", "Ano", "Mes", "Mes_Nome", "Vazao", "Vazao_log", "hidroEstAmo_dist_MD_ME", "Qsm", "Qsm_log", "Qnm_linha", "cr", "re", "k", "Qnm", "Qst", "Volume", "Ano_Entrada_Operacao"])
 for row in rows:
     hidroEstAmo_id = int(row[0])
@@ -417,7 +422,7 @@ for row in rows:
     area = row[26]
     
     if (area==0): #calcular area pelas verticais, já que falta a informação no BD
-        verticais_query = "SELECT hidroEstAmoVert.* FROM dctweb_d6.hidro_estacoes_amostras_verticais AS hidroEstAmoVert WHERE hidroEstAmoVert.hidroEstAmoVert_hidroEstAmo_id = {}";
+        verticais_query = "SELECT hidroEstAmoVert.* FROM hidro_estacoes_amostras_verticais AS hidroEstAmoVert WHERE hidroEstAmoVert.hidroEstAmoVert_hidroEstAmo_id = {}";
         verticais_todas = run_query(verticais_query.format(hidroEstAmo_id))
         X = []
         Y = []
@@ -529,7 +534,6 @@ Ano_Entrada_Operacao = data_amostras["Ano_Entrada_Operacao"].unique()
 formatted_Volume = locale.currency(Volume[0], grouping=True, symbol=False)
 options_anos_vazoes = intervalo_anos_vazoes(reservatorio_id[0])
 options_meses_vazoes = intervalo_meses_vazoes(reservatorio_id[0])
-
 if (len(options_anos_vazoes)>0):
     columns = ['value']
     index_aux = pd.MultiIndex.from_product([options_anos_vazoes, options_meses_vazoes], names=['Year', 'Month'])
@@ -537,14 +541,16 @@ if (len(options_anos_vazoes)>0):
     data_qst = pd.DataFrame(index=index_aux, columns=columns)
     data_vazoes['value'] = 0 
     data_qst['value'] = 0
-    query_vazoes = "SELECT DATE_FORMAT(FROM_UNIXTIME(hidroVaz_data), '%Y') AS ano, DATE_FORMAT(FROM_UNIXTIME(hidroVaz_data), '%b') AS mes, sum(`Afluencia`) AS `Afluencia-SUM` FROM `hidro_vazoes_ana` WHERE `Afluencia`>0 AND hidrovaz_hidroRes_id = {} GROUP BY ano, mes ORDER BY hidroVaz_data";
+#    query_vazoes = "SELECT DATE_FORMAT(FROM_UNIXTIME(hidroVaz_data), '%Y') AS ano, DATE_FORMAT(FROM_UNIXTIME(hidroVaz_data), '%b') AS mes, sum(Afluencia) AS Afluencia_SUM FROM hidro_vazoes_ana WHERE Afluencia>0 AND hidrovaz_hidroRes_id = {} GROUP BY ano, mes ORDER BY hidroVaz_data";
+    query_vazoes = "SELECT TO_CHAR(DATE_TRUNC('month', TO_TIMESTAMP_NTZ(hidroVaz_data)), 'YYYY') AS ano, TO_CHAR(DATE_TRUNC('month', TO_TIMESTAMP_NTZ(hidroVaz_data)), 'Mon') AS mes, SUM(Afluencia) AS Afluencia_SUM FROM hidro_vazoes_ana WHERE Afluencia > 0 AND hidrovaz_hidroRes_id = {} GROUP BY ano, mes ORDER BY ano";
+    
     rows_aux = run_query(query_vazoes.format(reservatorio_id[0]))
     for row in rows_aux:
         USIT_VAMD_SUM = row[2]
         data_vazoes.loc[(row[0], str(row[1])), 'value'] = USIT_VAMD_SUM
 #        qst = curva_chave_sedimentos(USIT_VAMD_SUM)
 #        data_qst.loc[(row[0], str(row[1])), 'value'] = qst
-
+    
     data_vazoes_completo = data_vazoes.copy()
 
 # ==================================================================== #
