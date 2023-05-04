@@ -264,8 +264,8 @@ def retorna_er():
 # =========================================================== #
 #                 FUNÇÃO CALCULAR PESO ESPECÍFICO             #
 # =========================================================== #
-#def retorna_pe():    
-#    return 1.04
+def retorna_pe():    
+    return 1.04
 
 # =========================================================== #
 #                   FUNÇÃO ORGANIZAR OS MESES                 # 
@@ -325,7 +325,8 @@ def atualiza_resumo():
     # ==================================================================== #
     reservatorio_id = data_amostras["Reservatorio_id"].unique()
     Volume = data_amostras["Volume"].unique()
-    formatted_Volume = locale.currency(Volume[0], grouping=True, symbol=False)
+    #formatted_Volume = locale.currency(Volume[0], grouping=True, symbol=False)
+    formatted_Volume = Volume[0]
     options_anos_vazoes = intervalo_anos_vazoes(reservatorio_id[0])
     options_meses_vazoes = intervalo_meses_vazoes(reservatorio_id[0])
 
