@@ -19,15 +19,18 @@ from matplotlib.sphinxext.plot_directive import align
 from PIL import Image
 import snowflake.connector
 
-#locale.setlocale(locale.LC_ALL, 'pt_BR.utf-8')
+locale.setlocale(locale.LC_ALL, 'pt_BR.utf-8')
 sns.set_style('whitegrid')
+#sns.set_style("darkgrid")
 
 # =========================================================== #
 #                   CONEXÃO COM BANCO DE DADOS                #
 # =========================================================== #
 # Uses st.cache_resource to only run once.
 def init_connection():
+#    return mysql.connector.connect(**st.secrets["mysql"])
     return snowflake.connector.connect(user="lucianoribeirogyn", password="0VanderWar!", account="khhsoma-zb85392", database="dctweb_d6", schema="PUBLIC", warehouse="DCTWEB_D6")
+
 conn = init_connection()
 
 # =========================================================== #
@@ -234,7 +237,6 @@ def intervalo_meses_vazoes(reservatorio_id):
     for row in n_meses:
         options_meses_vazoes.append(str(row[0]))
     return options_meses_vazoes
-
 
 # =========================================================== #
 #  FUNÇÃO CALCULAR QST A PARTIR DA EQ CURVA CHAVE SEDIMENTOS  #
