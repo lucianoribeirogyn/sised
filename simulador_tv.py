@@ -668,8 +668,9 @@ if (len(options_anos_vazoes)>0):
         #formatted_volmaa_ano = locale.currency(volmaa_ano, grouping=True, symbol=False)
         formatted_volmaa_ano = volmaa_ano
         
-        testestr = resumo.loc[resumo['Variavel'] == 'b_string_completo', 'Value'].values[0]+resumo.loc[resumo['Variavel'] == 'formatted_b_coeficiente_completo', 'Value'].values[0]
-        st.write(testestr)
+#        testestr = resumo.loc[resumo['Variavel'] == 'b_string_completo', 'Value'].values[0]+resumo.loc[resumo['Variavel'] == 'formatted_b_coeficiente_completo', 'Value'].values[0]
+        st.write(resumo.loc[resumo['Variavel'] == 'b_string_completo', 'Value'].values[0])
+        st.write(resumo.loc[resumo['Variavel'] == 'formatted_b_coeficiente_completo', 'Value'].values[0])
         
         data_reservatorio_aux = {
             "Descrição": ["Volume Reservatório [hm³]", "Vazão Média Afluente Anual [m³/s]", "Volume Médio Afluente Anual [hm³]", "Descarga Sólida Média Afluente (Qst) [t/d]", "Volume Sedimento Médio Retido (hm³/ano)", "Assoreamento [%]", "Amostras Analisadas", "Equação Curva Chave"],
