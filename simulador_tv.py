@@ -661,10 +661,12 @@ if (len(options_anos_vazoes)>0):
         st.pyplot(fig_mes)      
     with c6:
         volmaa_ano_total = resumo.loc[resumo['Variavel'] == 'vazaomaa_ano_completo', 'Value'].values[0]*(60*60*24*365)/1000000; #transformando seg em anos
-        formatted_volmaa_ano_completo = locale.currency(volmaa_ano_total, grouping=True, symbol=False)
+        #formatted_volmaa_ano_completo = locale.currency(volmaa_ano_total, grouping=True, symbol=False)
+        formatted_volmaa_ano_completo = volmaa_ano_total
         
         volmaa_ano = resumo.loc[resumo['Variavel'] == 'vazaomaa_ano', 'Value'].values[0]*(60*60*24*365)/1000000; #transformando seg em anos
-        formatted_volmaa_ano = locale.currency(volmaa_ano, grouping=True, symbol=False)
+        #formatted_volmaa_ano = locale.currency(volmaa_ano, grouping=True, symbol=False)
+        formatted_volmaa_ano = volmaa_ano
 
         data_reservatorio_aux = {
             "Descrição": ["Volume Reservatório [hm³]", "Vazão Média Afluente Anual [m³/s]", "Volume Médio Afluente Anual [hm³]", "Descarga Sólida Média Afluente (Qst) [t/d]", "Volume Sedimento Médio Retido (hm³/ano)", "Assoreamento [%]", "Amostras Analisadas", "Equação Curva Chave"],
