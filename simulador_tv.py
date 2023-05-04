@@ -20,6 +20,7 @@ from PIL import Image
 import snowflake.connector
 
 #locale.setlocale(locale.LC_ALL, 'en_US.utf-8')
+locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 sns.set_style('whitegrid')
 
 # =========================================================== #
