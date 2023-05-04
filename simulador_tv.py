@@ -7,7 +7,6 @@ import plotly.graph_objs as go
 import seaborn as sns
 import pandas as pd
 import subprocess
-import mysql.connector
 import numpy as np
 from numba.tests.npyufunc.test_ufunc import dtype
 from enum import auto
@@ -18,17 +17,17 @@ import math
 import statsmodels.formula.api as smf
 from matplotlib.sphinxext.plot_directive import align
 from PIL import Image
+import snowflake.connector
 
 #locale.setlocale(locale.LC_ALL, 'pt_BR.utf-8')
 sns.set_style('whitegrid')
-#sns.set_style("darkgrid")
 
 # =========================================================== #
 #                   CONEXÃO COM BANCO DE DADOS                #
 # =========================================================== #
 # Uses st.cache_resource to only run once.
 def init_connection():
-    return mysql.connector.connect(**st.secrets["mysql"])
+    return snowflake.connector.connect(user="lucianoribeirogyn", password="0VanderWar!", account="khhsoma-zb85392", database="dctweb_d6", schema="PUBLIC", warehouse="DCTWEB_D6")
 conn = init_connection()
 
 # =========================================================== #
