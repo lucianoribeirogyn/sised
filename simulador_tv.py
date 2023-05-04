@@ -265,7 +265,7 @@ def retorna_er():
 #                 FUNÇÃO CALCULAR PESO ESPECÍFICO             #
 # =========================================================== #
 def retorna_pe():    
-    return "1.04"
+    return 1.04
 
 # =========================================================== #
 #                   FUNÇÃO ORGANIZAR OS MESES                 # 
@@ -369,7 +369,8 @@ def atualiza_resumo():
     
     #depois, eu tenho que implementar funcoes para calcular a eficiencia da retenção e peso especifico aparente
     eficiencia_retencao_Er_ano = retorna_er()
-    peso_especifico_ap_ano = retorna_pe()
+    #peso_especifico_ap_ano = retorna_pe()
+    peso_especifico_ap_ano = 1.04
     volume_sedimento_ano_completo = ((365*qst_total_por_ano_media_dia_completo.mean()*eficiencia_retencao_Er_ano)/peso_especifico_ap_ano)/1000000
     volume_sedimento_ano = ((365*qst_total_por_ano_media_dia.mean()*eficiencia_retencao_Er_ano)/peso_especifico_ap_ano)/1000000
     
