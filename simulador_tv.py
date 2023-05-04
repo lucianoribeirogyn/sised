@@ -534,7 +534,8 @@ if huevar == "None":
 reservatorio_id = data_amostras["Reservatorio_id"].unique()
 Volume = data_amostras["Volume"].unique()
 Ano_Entrada_Operacao = data_amostras["Ano_Entrada_Operacao"].unique()
-formatted_Volume = locale.currency(Volume[0], grouping=True, symbol=False)
+#formatted_Volume = locale.currency(Volume[0], grouping=True, symbol=False)
+formatted_Volume = Volume[0]
 options_anos_vazoes = intervalo_anos_vazoes(reservatorio_id[0])
 options_meses_vazoes = intervalo_meses_vazoes(reservatorio_id[0])
 if (len(options_anos_vazoes)>0):
