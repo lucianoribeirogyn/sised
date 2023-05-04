@@ -265,7 +265,7 @@ def retorna_er():
 #                 FUNÇÃO CALCULAR PESO ESPECÍFICO             #
 # =========================================================== #
 def retorna_pe():    
-    return 1.04
+    return "1.04"
 
 # =========================================================== #
 #                   FUNÇÃO ORGANIZAR OS MESES                 # 
