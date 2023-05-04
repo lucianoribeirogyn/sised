@@ -21,7 +21,6 @@ import snowflake.connector
 
 locale.setlocale(locale.LC_ALL, 'en_US.utf-8')
 sns.set_style('whitegrid')
-#sns.set_style("darkgrid")
 
 # =========================================================== #
 #                   CONEXÃO COM BANCO DE DADOS                #
