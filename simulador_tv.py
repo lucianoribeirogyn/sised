@@ -315,10 +315,14 @@ def atualiza_resumo():
     a_coeficiente = model.params['np.log(Vazao)']
 
     #reg_line = a_coeficiente * log_Qst_eixo_x + b_coeficiente
-    formatted_a_coeficiente_completo = locale.currency(a_coeficiente_completo, grouping=True, symbol=False)
-    formatted_b_coeficiente_completo = locale.currency(b_coeficiente_completo, grouping=True, symbol=False)
-    formatted_a_coeficiente = locale.currency(a_coeficiente, grouping=True, symbol=False)
-    formatted_b_coeficiente = locale.currency(b_coeficiente, grouping=True, symbol=False)
+#    formatted_a_coeficiente_completo = locale.currency(a_coeficiente_completo, grouping=True, symbol=False)
+#    formatted_b_coeficiente_completo = locale.currency(b_coeficiente_completo, grouping=True, symbol=False)
+#    formatted_a_coeficiente = locale.currency(a_coeficiente, grouping=True, symbol=False)
+#    formatted_b_coeficiente = locale.currency(b_coeficiente, grouping=True, symbol=False)
+    formatted_a_coeficiente_completo = a_coeficiente_completo
+    formatted_b_coeficiente_completo = b_coeficiente_completo
+    formatted_a_coeficiente = a_coeficiente
+    formatted_b_coeficiente = b_coeficiente
     
     # ==================================================================== #
     #                            TABELA DE VAZÃO                           #
