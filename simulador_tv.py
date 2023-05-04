@@ -343,16 +343,19 @@ def atualiza_resumo():
     grouped_ano_qst = data_qst.groupby(['Year'])
     qst_total_por_ano_media_dia_completo = curva_chave_sedimentos_dataframe(vazao_total_por_ano_completo, a_coeficiente_completo, b_coeficiente_completo)
     qst_total_por_ano_media_dia = curva_chave_sedimentos_dataframe(vazao_total_por_ano, a_coeficiente, b_coeficiente)
-    formatted_qst_ano_completo = locale.currency(qst_total_por_ano_media_dia_completo.mean(), grouping=True, symbol=False)
-    formatted_qst_ano = locale.currency(qst_total_por_ano_media_dia.mean(), grouping=True, symbol=False)
+#    formatted_qst_ano_completo = locale.currency(qst_total_por_ano_media_dia_completo.mean(), grouping=True, symbol=False)
+#    formatted_qst_ano = locale.currency(qst_total_por_ano_media_dia.mean(), grouping=True, symbol=False)
+    formatted_qst_ano_completo = qst_total_por_ano_media_dia_completo.mean()
+    formatted_qst_ano = qst_total_por_ano_media_dia.mean()
     vazao_ano_media_dia_completo = vazao_total_por_ano_completo/365
     vazaomaa_ano_completo = vazao_ano_media_dia_completo.mean()[0];
-    formatted_vazaomaa_ano_completo = locale.currency(vazaomaa_ano_completo, grouping=True, symbol=False)
+#    formatted_vazaomaa_ano_completo = locale.currency(vazaomaa_ano_completo, grouping=True, symbol=False)
+    formatted_vazaomaa_ano_completo = vazaomaa_ano_completo
     vazao_ano_media_dia = vazao_total_por_ano/365
     vazaomaa_ano = vazao_ano_media_dia.mean()[0];
-    formatted_vazaomaa_ano = locale.currency(vazaomaa_ano, grouping=True, symbol=False)
+    #formatted_vazaomaa_ano = locale.currency(vazaomaa_ano, grouping=True, symbol=False)
+    formatted_vazaomaa_ano = vazaomaa_ano
 
-    
     
     ### BLOCO PARA MÊS
     grouped_mes_vazao_completo = data_vazoes_completo.groupby(['Month'])
@@ -370,7 +373,8 @@ def atualiza_resumo():
     vazao_mes_media_dia_completo = grouped_mes_vazao_completo/30 ##funcao para achar dias do mês
     vazao_mes_media_dia = grouped_mes_vazao/30 ##funcao para achar dias do mês
     vazaomaa_mes = vazao_mes_media_dia.mean()[0];
-    formatted_vazaomaa_mes = locale.currency(vazaomaa_mes, grouping=True, symbol=False)
+    #formatted_vazaomaa_mes = locale.currency(vazaomaa_mes, grouping=True, symbol=False)
+    formatted_vazaomaa_mes = vazaomaa_mes
     
     #depois, eu tenho que implementar funcoes para calcular a eficiencia da retenção e peso especifico aparente
     eficiencia_retencao_Er_ano = retorna_er()
@@ -379,15 +383,18 @@ def atualiza_resumo():
     volume_sedimento_ano_completo = ((365*qst_total_por_ano_media_dia_completo.mean()*eficiencia_retencao_Er_ano)/peso_especifico_ap_ano)/1000000
     volume_sedimento_ano = ((365*qst_total_por_ano_media_dia.mean()*eficiencia_retencao_Er_ano)/peso_especifico_ap_ano)/1000000
     
-    formatted_volume_sedimento_ano_completo = locale.currency(volume_sedimento_ano_completo, grouping=True, symbol=False)
-    formatted_volume_sedimento_ano = locale.currency(volume_sedimento_ano, grouping=True, symbol=False)
+#    formatted_volume_sedimento_ano_completo = locale.currency(volume_sedimento_ano_completo, grouping=True, symbol=False)
+#    formatted_volume_sedimento_ano_completo = locale.currency(volume_sedimento_ano_completo, grouping=True, symbol=False)
+    formatted_volume_sedimento_ano = volume_sedimento_ano
     
     current_year = datetime.datetime.now().year
     #depois, funcao para pegar ano de inauguração
     assoreamento_ano_completo =  ((current_year-int(Ano_Entrada_Operacao[0]))*volume_sedimento_ano_completo)
     assoreamento_ano =  ((current_year-int(Ano_Entrada_Operacao[0]))*volume_sedimento_ano)
-    formatted_volume_assoreamento_ano_completo = locale.currency((assoreamento_ano_completo/float(Volume))*100, grouping=True, symbol=False)
-    formatted_volume_assoreamento_ano = locale.currency((assoreamento_ano/float(Volume))*100, grouping=True, symbol=False)
+#    formatted_volume_assoreamento_ano_completo = locale.currency((assoreamento_ano_completo/float(Volume))*100, grouping=True, symbol=False)
+#    formatted_volume_assoreamento_ano = locale.currency((assoreamento_ano/float(Volume))*100, grouping=True, symbol=False)
+    formatted_volume_assoreamento_ano_completo = (assoreamento_ano_completo/float(Volume))*100
+    formatted_volume_assoreamento_ano = (assoreamento_ano/float(Volume))*100
     
     b_string_completo = ''
     if (b_coeficiente_completo>0):
