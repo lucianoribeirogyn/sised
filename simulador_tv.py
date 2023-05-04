@@ -499,7 +499,7 @@ if selected_reservatorio:
 if (selected_reservatorio=="UHE Itumbiara"):
     image = Image.open('itumbiara.jpg')
 elif (selected_reservatorio=="UHE Batalha"):
-    image = Image.open('/var/www/drb/www/sised/img/2/batalha.jpg')
+    image = Image.open('batalha.jpg')
 st.sidebar.image(image, use_column_width=True)
 
 
