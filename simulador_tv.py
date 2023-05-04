@@ -482,7 +482,7 @@ if selected_reservatorio:
     ###ver se eu não tenho que filtrar vazoes aqui
 
 if (selected_reservatorio=="UHE Itumbiara"):
-    image = Image.open('/var/www/drb/www/sised/img/1/itumbiara.jpg')
+    image = Image.open('itumbiara.jpg')
 elif (selected_reservatorio=="UHE Batalha"):
     image = Image.open('/var/www/drb/www/sised/img/2/batalha.jpg')
 st.sidebar.image(image, use_column_width=True)
