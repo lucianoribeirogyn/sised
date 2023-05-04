@@ -670,8 +670,8 @@ if (len(options_anos_vazoes)>0):
 
         data_reservatorio_aux = {
             "Descrição": ["Volume Reservatório [hm³]", "Vazão Média Afluente Anual [m³/s]", "Volume Médio Afluente Anual [hm³]", "Descarga Sólida Média Afluente (Qst) [t/d]", "Volume Sedimento Médio Retido (hm³/ano)", "Assoreamento [%]", "Amostras Analisadas", "Equação Curva Chave"],
-            "Valor Real": ["oi", "oi", "oi", "oi", "oi", "oi", "oi", "oi"],
-            "Valor Simulado": ["oi", "oi", "oi", "oi", "oi", "oi", "oi", "oi"]
+            "Valor Real": [formatted_Volume, "oi", "oi", "oi", "oi", "oi", "oi", "oi"],
+            "Valor Simulado": [formatted_Volume, "oi", "oi", "oi", "oi", "oi", "oi", "oi"]
         }
         data_reservatorio = pd.DataFrame(data_reservatorio_aux)
         st.write(data_reservatorio)
