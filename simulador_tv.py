@@ -384,7 +384,8 @@ def atualiza_resumo():
     volume_sedimento_ano = ((365*qst_total_por_ano_media_dia.mean()*eficiencia_retencao_Er_ano)/peso_especifico_ap_ano)/1000000
     
 #    formatted_volume_sedimento_ano_completo = locale.currency(volume_sedimento_ano_completo, grouping=True, symbol=False)
-#    formatted_volume_sedimento_ano_completo = locale.currency(volume_sedimento_ano_completo, grouping=True, symbol=False)
+#    formatted_volume_sedimento_ano = locale.currency(volume_sedimento_ano, grouping=True, symbol=False)
+    formatted_volume_sedimento_ano_completo = volume_sedimento_ano_completo
     formatted_volume_sedimento_ano = volume_sedimento_ano
     
     current_year = datetime.datetime.now().year
